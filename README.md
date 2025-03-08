@@ -25,14 +25,14 @@ A smart video player built with **Tkinter, VLC, and OpenCV** that **automaticall
 | `Q` | Quit |
 
 
-## ⚙️ Technologies Used  
+## Technologies Used  
 - **Python** (Tkinter for GUI)  
 - **OpenCV** (Face & Eye Detection)  
 - **VLC** (Video Playback)  
 - **NumPy** (Image Processing)  
 
 
-## 🚀 How to Run  
+## How to Run  
 1. **Install Dependencies:**  
    ```sh
    pip install opencv-python numpy python-vlc
