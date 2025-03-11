@@ -22,7 +22,7 @@ A smart video player built with **Tkinter, VLC, and OpenCV** that **automaticall
 | `↑ / ↓` | Increase/Decrease Volume |
 | `← / →` | Seek Backward/Forward |
 | `+ / -` | Increase/Decrease Playback Speed |
-| `Q` | Quit |
+| `Q / Escape` | Quit |
 
 
 ## Technologies Used  
