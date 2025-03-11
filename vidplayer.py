@@ -100,6 +100,10 @@ class FaceDetectionVideoPlayer:
         self.root.bind("<plus>", lambda event: self.change_speed_hotkey(1))
         self.root.bind("<minus>", lambda event: self.change_speed_hotkey(-1))
         self.root.bind("<q>", lambda event: self.on_close())
+        self.root.bind("<Escape>", lambda event: self.on_close())
+        self.seek_bar.bind("<Button-1>", self.seek_on_click)
+
+
 
         # Start Threads
         threading.Thread(target=self.detect_faces_and_eyes, daemon=True).start()
@@ -141,11 +145,26 @@ class FaceDetectionVideoPlayer:
         self.play_button.config(text="Play")
         self.seek_var.set(0)
         self.time_label.config(text="00:00 / 00:00")
+        self.player.pause()
+        self.play_button.config(text="Play")
+        self.face_detection_paused_until = time.time() + 60
 
     def seek_video(self, value):
-        total_time = self.player.get_length() / 1000
-        new_time = float(value) / 100 * total_time
-        self.player.set_time(int(new_time * 1000))
+        if self.player.get_length() > 0:  # Ensure video is loaded
+            total_time = self.player.get_length() / 1000  # Convert to seconds
+            new_time = float(value) / 100 * total_time  # Calculate seek position
+            self.player.set_time(int(new_time * 1000))  # Convert to milliseconds
+    
+    def seek_on_click(self, event):
+        seek_bar_width = self.seek_bar.winfo_width()  # Get seek bar width
+        click_x = event.x  # Get the x-coordinate of the click
+        seek_percentage = (click_x / seek_bar_width) * 100  # Calculate percentage
+    
+        if self.player.get_length() > 0:  # Ensure video is loaded
+            total_time = self.player.get_length() / 1000  # Convert to seconds
+            new_time = (seek_percentage / 100) * total_time  # Convert to timestamp
+            self.player.set_time(int(new_time * 1000))  # Seek video (milliseconds)
+            self.seek_var.set(seek_percentage)  # Update seek bar position
 
     def set_volume(self, value):
         self.player.audio_set_volume(int(float(value)))
